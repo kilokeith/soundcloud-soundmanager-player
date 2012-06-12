@@ -230,6 +230,10 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	
 	/* ---- private methods ---- */
+	_this.get_track = function(){ return _this.current_track; };
+	_this.get_sound = function(){ return _this.sound; };
+	_this.get_playlist = function(){ return _this.playlist; };
+	
 	_this.set_cache = function(url, track){
 		if(_this.config.cache === true){
 			_this.cache[url] = track;
@@ -341,12 +345,13 @@ var SoundCloudPlayer = function(tracks, config){
 		, mute: 		this.mute
 		, volume: 		this.volume
 		, restart_track: this.restart_track
+		, change_track: this.change_track
 		, position: 	this.position
 		, seek: 		this.seek
-		, on: this.on
+		, on: 			this.on
 		, trigger: 		this.trigger
-		, track: 		this.current_track //expose the current track playing
-		, sound: 		this.sound 		//expose the current SM2 object
-		, playlist: 	this.tracks 	//expose the playlist
+		, track: 		this.get_track 		//expose the current track playing
+		, sound: 		this.get_sound 		//expose the current SM2 object
+		, playlist: 	this.get_playlist 	//expose the playlist
 	};
 };

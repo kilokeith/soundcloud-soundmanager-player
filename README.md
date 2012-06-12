@@ -1,7 +1,7 @@
 soundcloud-soundmanager-player
 ==============================
 
-A completely custom, evented SoundCloud player that uses SoundManager2 to handle audio. Completely decoupled from your HTML/CSS to just handle audio/playlists/tracks, but has events that are easy to hook into. Also includes a waveform module that is loosely coupled to your HTML.
+A custom, evented SoundCloud player that uses SoundManager2 to handle audio. Completely decoupled from your HTML/CSS to just handle audio/playlists/tracks, but has events that are easy to hook into. Also includes a waveform module that is loosely coupled to your HTML.
 
 
 Requirements
@@ -92,27 +92,28 @@ Public Methods
 The player exposes a lot of methods. They should be self explanatory.
 
 Public methods
-+ play
-+ pause
-+ stop
-+ next
-+ prev
-+ mute
-+ seek
-+ restart_track
++ play()
++ pause()
++ stop()
++ next(autoplay)  //overrides the autoswitch config
++ prev(autoplay)  //overrides the autoswitch config
++ mute()
++ seek(position)
++ restart_track()
++ change_track(index) //change track by playlist index
 
 Property Getter/Setter
-+ volume
-+ position
++ volume(vol)
++ position(pos)
 
 Event emiter/listener
-+ on
-+ trigger
++ on(eventname, function)
++ trigger(eventname, args...)
 
-Internal objects
-+ track (current track)	
-+ sound (the SM2 sound object for current track)
-+ playlist (same one you passed)
+Internal object getter
++ track() (current track)	
++ sound() (the SM2 sound object for current track)
++ playlist() (same one you passed)
 
 
 
