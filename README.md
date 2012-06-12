@@ -199,7 +199,7 @@ License
 
 This work is licensed under a Creative Commons Attribution 3.0 Unported License.
 by [Keith Hoffmann][] based on a work at [github.com][].
-[http://i.creativecommons.org/l/by/3.0/88x31.png][http://creativecommons.org/licenses/by/3.0/]
+![http://creativecommons.org/licenses/by/3.0/](http://i.creativecommons.org/l/by/3.0/88x31.png) http://creativecommons.org/licenses/by/3.0/
 
-  [Keith Hoffmann]: http://keith.hoffmann.me
+  [Keith Hoffmann]: http://www.eyesandearsentertainment.com
   [github.com]: https://github.com/kilokeith/soundcloud-soundmanager-player
