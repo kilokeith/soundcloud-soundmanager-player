@@ -64,6 +64,7 @@ Player
 + scplayer.mute
 + scplayer.position
 + scplayer.volume
++ scplayer.changing_track
 
 Playlist
 + scplayer.playlist.next

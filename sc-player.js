@@ -87,9 +87,14 @@ var SoundCloudPlayer = function(tracks, config){
 			_this.sound = null;
 		}
 		
+		
 		var i = (typeof index != 'undefined' )? index : _this.current_track_index;
-		var url = _this.tracks[i];
-		_this.resolve_track(url, _this.set_sound);
+		if( index != _this.current_track_index || !index){
+			var url = _this.tracks[i];
+			_this.resolve_track(url, _this.set_sound);
+			_this.trigger('scplayer.changing_track', index);
+		}
+		return _this;
 	}
 	
 	
