@@ -64,7 +64,7 @@ Player
 + scplayer.mute
 + scplayer.position
 + scplayer.volume
-+ scplayer.changing_track
++ scplayer.x
 
 Playlist
 + scplayer.playlist.next
@@ -198,11 +198,11 @@ License
 -------
 
 This work is licensed under a Creative Commons Attribution 3.0 Unported License.
-[![Creative Commons License][]][]
 <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">soundcloud-soundmanager-player</span>
-by [Keith Hoffmann][] is licensed under a [Creative Commons Attribution
-3.0 Unported License][![Creative Commons License][].
+by [Keith Hoffmann][] is licensed under a Creative Commons Attribution
+3.0 Unported License.
 Based on a work at [github.com][].
+[![Creative Commons License][]][]
 
   [Creative Commons License]: http://i.creativecommons.org/l/by/3.0/88x31.png
   [![Creative Commons License][]]: http://creativecommons.org/licenses/by/3.0/
