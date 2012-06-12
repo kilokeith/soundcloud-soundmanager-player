@@ -66,6 +66,11 @@ var SCWaveform = function(scplayer, config, selectors){
 	_this.player.on('scplayer.track.whileplaying', function(e, percent){
 		_this.dom.playbar.css('width', percent + '%');
 	});
+	//when the track changes
+	_this.player.on('scplayer.changing_track', function(e, index){
+		_this.dom.playbar.css('width', '0%');
+		_this.dom.buffer.css('width', '0%');
+	});
 	
 	//
 	_this.load_waveform = function(url){
