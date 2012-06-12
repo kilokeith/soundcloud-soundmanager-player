@@ -100,6 +100,7 @@ Public methods
 + mute()
 + seek(position)
 + restart_track()
++ get_time()	  //gets the current time, based on position like m:ss. Pretty weak. Better roll your own with something like moment.js
 + change_track(index) //change track by playlist index
 
 Property Getter/Setter
@@ -155,7 +156,7 @@ scplayer.on('scplayer.pause', function(e, is_paused){
 //show playing progress
 scplayer.on('scplayer.track.whileplaying', function(e, percent){
 	$('.playhead').css('width', percent + '%');
-	$('.track_time_').text( scplayer.get_time() );
+	$('.track_time').text( scplayer.get_time() );
 });
 ```
 

@@ -356,6 +356,7 @@ var SoundCloudPlayer = function(tracks, config){
 		, next: 		this.next
 		, prev: 		this.prev
 		, mute: 		this.mute
+		, get_time: 	this.get_time
 		, volume: 		this.volume
 		, restart_track: this.restart_track
 		, change_track: this.change_track
