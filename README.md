@@ -129,6 +129,35 @@ scplayer.pause().next().play().volume(75);
 Examples
 ========
 
+Most of the time, you're going to call public methods and listen for events. -- more to come
+```js
+//new SC player
+var scplayer = new SoundCloudPlayer(
+	[ "/diplo/wobble-prod-diplo"
+	, "/diplo/sleigh-bells-demons-diplo"
+	, "/abdecaf/feedyourbrain"
+	]
+	, {consumer_key: "XXXXXXXXXXXXXX", autoplay: false, toggle_pause: true}
+);
+//clicking play
+$('#playbtn').on('click', function(){
+	//will work because of toggle_pause
+	scplayer.pause();
+});
+//show pause status
+scplayer.on('scplayer.pause', function(e, is_paused){
+	if( is_paused === true ){
+		$('#playbtn').addClass('paused');
+	}else{
+		$('#playbtn').removeClass('paused');
+	}
+});
+//show playing progress
+scplayer.on('scplayer.track.whileplaying', function(e, percent){
+	$('.playhead').css('width', percent + '%');
+	$('.track_time_').text( scplayer.get_time() );
+});
+```
 
 
 

@@ -175,6 +175,19 @@ var SoundCloudPlayer = function(tracks, config){
 		_this.trigger('scplayer.mute', _this.sound.muted);
 		return _this;
 	};
+	
+	this.get_time = function(){
+		var time = this.position();
+		var ms = time % 1000
+		  , s = Math.floor((time / 1000) % 60)
+		  , m = Math.floor((time / (60 * 1000)) % 60)
+		  , h = Math.floor((time / (60 * 60 * 1000)) % 24)
+		  ;
+		var t = m + ':' + s;
+		if(h > 0) t = h + ':' + t;
+		return t;
+	};
+	
 	this.position = function(pos){
 		if(_this.sound){
 			if(pos){
