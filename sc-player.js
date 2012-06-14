@@ -55,6 +55,7 @@ var SoundCloudPlayer = function(tracks, config){
 		, volume: 100
 		, toggle_pause: true //should pause act as a toggle?
 		, cache: true //caches the SC track lookup. Browser should handle the audio
+		, debug: false
 	}, 
 	sc_resolve_url = "http://api.soundcloud.com/resolve?url=http://soundcloud.com";
 	
@@ -130,7 +131,7 @@ var SoundCloudPlayer = function(tracks, config){
 	this.next = function(autoplay){
 		//play the next track?
 		_this.play_when_ready = (typeof autoplay != 'undefined')? autoplay : _this.config.autoswitch;
-		console.log(_this.play_when_ready);
+		if(_this.config.debug) console.log(_this.play_when_ready);
 		
 		if( _this.tracks[ _this.current_track_index+1 ] ){
 			_this.current_track_index++;
@@ -288,7 +289,7 @@ var SoundCloudPlayer = function(tracks, config){
 				_this.trigger('scplayer.track.whileplaying', percent);
 			}
 			, onplay: function() {
-				console.log('playyyyy');
+				if(_this.config.debug) console.log('playyyyy');
 				_this.trigger('scplayer.track.played');
 			}
 			, onresume: function() {
@@ -304,7 +305,7 @@ var SoundCloudPlayer = function(tracks, config){
 				_this.trigger('scplayer.track.finished');
 			}
 			, onload: function() {
-				console.log('onload');
+				if(_this.config.debug) console.log('onload');
 				_this.trigger('scplayer.track.ready', _this.current_track_index, _this.current_track);
 			}
 		});
@@ -332,7 +333,6 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	/* internal events */
 	_this.on('scplayer.track.ready', function(e){
-		//console.log('scplayer.ready', _this.play_when_ready, _this.sound.playState);
 		if( _this.play_when_ready == true ){
 			_this.play();
 			_this.play_when_ready = false;
