@@ -69,6 +69,7 @@ var SoundCloudPlayer = function(tracks, config){
 	this.current_track_index = 0;
 	this.current_track = null;
 	this.sound = null;
+	
 	//hold a state so when you hit play it'll play on the correct sound when it's ready
 	this.play_when_ready = false;
 	//hold a cache for SC lookups
@@ -226,6 +227,7 @@ var SoundCloudPlayer = function(tracks, config){
 				vol = Math.max(0, vol);
 				//setter
 				_this.trigger('scplayer.volume', vol);
+				_this.config.volume = vol;
 				return _this.sound.setVolume(vol);
 			}else{
 				//getter
