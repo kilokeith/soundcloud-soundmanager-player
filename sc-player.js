@@ -31,7 +31,7 @@ soundManager.useFastPolling = true;
 	scplayer.playlist.prev
 	scplayer.playlist.looped
 	scplayer.playlist.restarted
-
+	scplayer.playlist.goto
 */
 /* SCPLAYER TRACK EVENTS */
 /*
@@ -165,7 +165,17 @@ var SoundCloudPlayer = function(tracks, config){
 		}
 		return _this;
 	};
-	
+	this.goto = function(index, autoplay){
+		//play the next track?
+		_this.play_when_ready = (typeof autoplay != 'undefined')? autoplay : _this.config.autoswitch;
+		
+		if( _this.tracks[ index ] ){
+			_this.current_track_index = index;
+			_this.trigger('scplayer.playlist.goto');
+			_this.change_track();
+		}
+		return _this;
+	};
 	
 	//sound related methods
 	this.restart_track = function(){
@@ -360,7 +370,7 @@ var SoundCloudPlayer = function(tracks, config){
 		, get_time: 	this.get_time
 		, volume: 		this.volume
 		, restart_track: this.restart_track
-		, change_track: this.change_track
+		, goto: 		this.goto
 		, position: 	this.position
 		, seek: 		this.seek
 		, on: 			this.on
