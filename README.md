@@ -97,11 +97,12 @@ Public methods
 + stop()
 + next(autoplay)  //overrides the autoswitch config
 + prev(autoplay)  //overrides the autoswitch config
++ goto(index) //change track by playlist index
 + mute()
 + seek(position)
 + restart_track()
 + get_time()	  //gets the current time, based on position like m:ss. Pretty weak. Better roll your own with something like moment.js
-+ change_track(index) //change track by playlist index
+
 
 Property Getter/Setter
 + volume(vol)
