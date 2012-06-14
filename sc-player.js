@@ -20,6 +20,7 @@ soundManager.useFastPolling = true;
 	scplayer.mute
 	scplayer.position
 	scplayer.volume
+	scplayer.changing_track
 
 */
 /* SCPLAYER PLAYLIST EVENTS */
@@ -92,7 +93,7 @@ var SoundCloudPlayer = function(tracks, config){
 		if( index != _this.current_track_index || !index){
 			var url = _this.tracks[i];
 			_this.resolve_track(url, _this.set_sound);
-			_this.trigger('scplayer.changing_track', index);
+			_this.trigger('scplayer.changing_track', i);
 		}
 		return _this;
 	}
