@@ -34,6 +34,16 @@ var scplayer = new SoundCloudPlayer(
 );
 ```
 
+Also, we can now take in sets and parse out the track before moving on
+```js
+var scplayer = new SoundCloudPlayer(
+	[ "/royalbassrecords/sets/dubstep"
+	, "/diplo/sleigh-bells-demons-diplo"
+	, "/abdecaf/feedyourbrain"
+	]
+	, {consumer_key: "XXXXXXXXXXXXXX", preload: true}
+);
+```
 
 
 Options
@@ -59,35 +69,35 @@ Events
 The player emits many events. Some are general to the player. Other are specific to the playlist or track. Most events will try to pass relevant data back to the listener. (eg: scplayer.volume returns with the set volume)
 
 Player
-+ scplayer.init                  //player initially loads
-+ scplayer.play                  //player plays - or attempts to play
-+ scplayer.pause                 //player pauses
-+ scplayer.stop                  //player stops
-+ scplayer.mute                  //player (un)mutes
-+ scplayer.position              //player position is set
-+ scplayer.volume                //player volume is set
-+ scplayer.changing_track        //player changes tracks
-
-Playlist
-+ scplayer.playlist.next         //playlist moves to next track
-+ scplayer.playlist.looped       //playlist hits next from end track with looping on, returns to start
-+ scplayer.playlist.ended        //playlist reaches the end and stops
-+ scplayer.playlist.prev         //playlist moves to prev track
-+ scplayer.playlist.looped       //playlist hits prev from first track with looping on, goes to last track
-+ scplayer.playlist.restarted    //playlist hits prev from first track with looping off
-+ scplayer.playlist.preloaded    //playlist has preloaded all SC data
++ scplayer.init                  #player initially loads
++ scplayer.play                  #player plays - or attempts to play
++ scplayer.pause                 #player pauses
++ scplayer.stop                  #player stops
++ scplayer.mute                  #player (un)mutes
++ scplayer.position              #player position is set
++ scplayer.volume                #player volume is set
++ scplayer.changing_track        #player changes tracks
+                                 
+Playlist                         
++ scplayer.playlist.next         #playlist moves to next track
++ scplayer.playlist.looped       #playlist hits next from end track with looping on, returns to start
++ scplayer.playlist.ended        #playlist reaches the end and stops
++ scplayer.playlist.prev         #playlist moves to prev track
++ scplayer.playlist.looped       #playlist hits prev from first track with looping on, goes to last track
++ scplayer.playlist.restarted    #playlist hits prev from first track with looping off
++ scplayer.playlist.preloaded    #playlist has preloaded all SC data
                                  
 Track                            
-+ scplayer.track.info_loaded     //track has SC info loaded
-+ scplayer.track.bindable        //SM2 object is created and methods can be called/bound
-+ scplayer.track.ready           //track is fully buffered and can be played through
-+ scplayer.track.finished        //track finishes playing
-+ scplayer.track.whileloading    //track event with buffering is going on
-+ scplayer.track.whileplaying    //track event updates play position while playing
-+ scplayer.track.played          //track triggers play - actually played
-+ scplayer.track.paused          //track puases
-+ scplayer.track.resumed         //track resumes from pause
-+ scplayer.track.stopped         //track is stopped
++ scplayer.track.info_loaded     #track has SC info loaded
++ scplayer.track.bindable        #SM2 object is created and methods can be called/bound
++ scplayer.track.ready           #track is fully buffered and can be played through
++ scplayer.track.finished        #track finishes playing
++ scplayer.track.whileloading    #track event with buffering is going on
++ scplayer.track.whileplaying    #track event updates play position while playing
++ scplayer.track.played          #track triggers play - actually played
++ scplayer.track.paused          #track puases
++ scplayer.track.resumed         #track resumes from pause
++ scplayer.track.stopped         #track is stopped
 
 
 
@@ -99,13 +109,13 @@ Public methods
 + play()
 + pause()
 + stop()
-+ next(autoplay)  //overrides the autoswitch config
-+ prev(autoplay)  //overrides the autoswitch config
-+ goto(index)     //change track by playlist index
++ next(autoplay)  #overrides the autoswitch config
++ prev(autoplay)  #overrides the autoswitch config
++ goto(index)     #change track by playlist index
 + mute()
 + seek(position)
 + restart_track()
-+ get_time()	  //gets the current time, based on position like m:ss. Pretty weak. Better roll your own with something like moment.js
++ get_time()	  #gets the current time, based on position like m:ss. Pretty weak. Better roll your own with something like moment.js
 
 
 Property Getter/Setter
