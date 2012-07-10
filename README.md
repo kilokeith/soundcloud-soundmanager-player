@@ -41,12 +41,14 @@ Options
 
 We can configure the player with many options. Most control the flow of the playlist. These are the defaults; located at near the top of the class.
 ```js
-{ loop: false      //should the playlsit loop around on the ends
-, autoplay: false  //should the play start out playing
-, autoswitch: true //next track in playlist will auto load and play
-, volume: 100      //the initial volume
+{ loop: false        //should the playlsit loop around on the ends
+, autoplay: false    //should the play start out playing
+, autoswitch: true   //next track in playlist will auto load and play
+, volume: 100        //the initial volume
 , toggle_pause: true //should pause act as a toggle?
-, cache: true      //should it cache the SC track lookups. Browser should handle the audio
+, cache: true        //should it cache the SC track lookups. Browser should handle the audio
+, preload: false     //prefetch the SC track data
+, debug: false       //console.log() on
 }
 ```
 
@@ -57,33 +59,35 @@ Events
 The player emits many events. Some are general to the player. Other are specific to the playlist or track. Most events will try to pass relevant data back to the listener. (eg: scplayer.volume returns with the set volume)
 
 Player
-+ scplayer.init
-+ scplayer.play
-+ scplayer.pause
-+ scplayer.stop
-+ scplayer.mute
-+ scplayer.position
-+ scplayer.volume
-+ scplayer.changing_track
++ scplayer.init                  //player initially loads
++ scplayer.play                  //player plays - or attempts to play
++ scplayer.pause                 //player pauses
++ scplayer.stop                  //player stops
++ scplayer.mute                  //player (un)mutes
++ scplayer.position              //player position is set
++ scplayer.volume                //player volume is set
++ scplayer.changing_track        //player changes tracks
 
 Playlist
-+ scplayer.playlist.next
-+ scplayer.playlist.looped
-+ scplayer.playlist.ended
-+ scplayer.playlist.prev
-+ scplayer.playlist.looped
-+ scplayer.playlist.restarted
-
-Track
-+ scplayer.track.info_loaded
-+ scplayer.track.ready
-+ scplayer.track.finished
-+ scplayer.track.whileloading
-+ scplayer.track.whileplaying
-+ scplayer.track.played
-+ scplayer.track.paused
-+ scplayer.track.resumed
-+ scplayer.track.stopped
++ scplayer.playlist.next         //playlist moves to next track
++ scplayer.playlist.looped       //playlist hits next from end track with looping on, returns to start
++ scplayer.playlist.ended        //playlist reaches the end and stops
++ scplayer.playlist.prev         //playlist moves to prev track
++ scplayer.playlist.looped       //playlist hits prev from first track with looping on, goes to last track
++ scplayer.playlist.restarted    //playlist hits prev from first track with looping off
++ scplayer.playlist.preloaded    //playlist has preloaded all SC data
+                                 
+Track                            
++ scplayer.track.info_loaded     //track has SC info loaded
++ scplayer.track.bindable        //SM2 object is created and methods can be called/bound
++ scplayer.track.ready           //track is fully buffered and can be played through
++ scplayer.track.finished        //track finishes playing
++ scplayer.track.whileloading    //track event with buffering is going on
++ scplayer.track.whileplaying    //track event updates play position while playing
++ scplayer.track.played          //track triggers play - actually played
++ scplayer.track.paused          //track puases
++ scplayer.track.resumed         //track resumes from pause
++ scplayer.track.stopped         //track is stopped
 
 
 
@@ -97,7 +101,7 @@ Public methods
 + stop()
 + next(autoplay)  //overrides the autoswitch config
 + prev(autoplay)  //overrides the autoswitch config
-+ goto(index) //change track by playlist index
++ goto(index)     //change track by playlist index
 + mute()
 + seek(position)
 + restart_track()

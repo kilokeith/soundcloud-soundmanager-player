@@ -32,10 +32,12 @@ soundManager.useFastPolling = true;
 	scplayer.playlist.looped
 	scplayer.playlist.restarted
 	scplayer.playlist.goto
+	scplayer.playlist.preloaded
 */
 /* SCPLAYER TRACK EVENTS */
 /*
 	scplayer.track.info_loaded
+	scplayer.track.bindable
 	scplayer.track.ready
 	scplayer.track.finished
 	scplayer.track.whileloading
@@ -55,6 +57,7 @@ var SoundCloudPlayer = function(tracks, config){
 		, volume: 100
 		, toggle_pause: true //should pause act as a toggle?
 		, cache: true //caches the SC track lookup. Browser should handle the audio
+		, preload: false //prefetch the sc track data
 		, debug: false
 	}, 
 	sc_resolve_url = "http://api.soundcloud.com/resolve?url=http://soundcloud.com";
@@ -76,7 +79,7 @@ var SoundCloudPlayer = function(tracks, config){
 	this.cache = {};
 	
 	//setup
-	this.init = function(){		
+	this.init = function(){
 		_this.change_track();
 		_this.trigger('scplayer.init');
 		if(_this.config.autoplay) _this.play();
@@ -112,7 +115,7 @@ var SoundCloudPlayer = function(tracks, config){
 			//or hold a state to come back to when ready
 			_this.play_when_ready = true;
 		}
-		_this.trigger('scplayer.play');
+		_this.trigger('scplayer.play', _this.current_track_index);
 		
 		return _this;
 	};
@@ -259,7 +262,7 @@ var SoundCloudPlayer = function(tracks, config){
 	/* ---- private methods ---- */
 	_this.get_track = function(){ return _this.current_track; };
 	_this.get_sound = function(){ return _this.sound; };
-	_this.get_playlist = function(){ return _this.playlist; };
+	_this.get_playlist = function(){ return _this.tracks; };
 	
 	_this.set_cache = function(url, track){
 		if(_this.config.cache === true){
@@ -322,25 +325,99 @@ var SoundCloudPlayer = function(tracks, config){
 			}
 		});
 		
+		//
+		_this.trigger('scplayer.track.bindable', track, _this.sound);
 	};
 	
 	//gets a SC url and goes to SC to fetch the track data
 	_this.resolve_track = function(url, cb){
+		//new promise
+		var promise = new $.Deferred();
+		
 		//if we're cahcing check cache first
 		if( _this.config.cache === true ){
 			var track = _this.get_cache(url);
-			if(track && cb) return cb(track);
+			if(track && cb){
+				
+				promise.done(function(){
+					cb(track);
+				}).resolve();
+				return promise;
+			}
 		}
 		
-		$.getJSON(sc_resolve_url+url+
-			'&format=json'+
-			'&consumer_key='+_this.config.consumer_key+
-			'&callback=?'
-			, function(_track){
+		//define a complete condition for the promise
+		promise.done(function(_track){
+			if( _track.tracks && _track.tracks.length > 0 ){
+				var tracks = _this.parse_tracks(url, _track.tracks);
+				_track = tracks[0];
+			}else{
 				//maybe cache the track
 				if( _this.config.cache === true ) _this.set_cache(url, _track);
-				if(cb) cb(_track);
-			});
+			}
+			if(cb) cb(_track);
+		});
+		
+		//call the ajax
+		$.ajax({
+			  url: sc_resolve_url+url+
+				'&format=json'+
+				'&consumer_key='+_this.config.consumer_key+
+				'&callback=?'
+			, dataType: 'jsonp'
+			, error: function(jqXHR, textStatus, errorThrown){
+				promise.reject(jqXHR, textStatus, errorThrown);
+			}
+			, success: function(_track){
+				promise.resolve(_track);
+			}
+		});
+		return promise;
+	};
+	
+	//preload the SC track info
+	_this.preload_sc_tracks = function(cb){
+		var promises = [];
+		for(var x=0, l=_this.tracks.length; x<l; x++){
+			var _track = _this.tracks[x];
+			var promise = _this.resolve_track(_track);
+			promises.push(promise);
+		}
+		
+		//have to do apply to pass many promises as list instead of array
+		$.when.apply($, promises).then(
+			function(){
+				_this.trigger('scplayer.playlist.preloaded');
+				if(cb) cb();
+			},
+			function(){
+				//console.log('promises failed');
+			}
+		);
+	};
+	
+	//save track to the cache
+	_this.parse_tracks = function(url, _tracks){
+		var x = tracks.length, set_tracks = [];
+		for(var x=0, l=_tracks.length; x<l; x++){
+			var _track = _tracks[x];
+			//slice out track url - begins with http://soundcloude.com/
+			var trackurl = _track.permalink_url.substring(21);
+			
+			//cache tracks
+			if( _this.config.cache === true ) _this.set_cache(trackurl, _track);
+			set_tracks.push(_track);
+			
+			//add tracks to playlist
+			if(x==0){
+				//replace the origional set url with first track list so we don't do this again
+				_this.tracks.splice(_this.current_track_index, 1, trackurl);
+			}else{
+				_this.tracks.splice(_this.current_track_index+x, 0, trackurl);
+			}
+		}
+		
+		return set_tracks;
 	};
 	
 	/* internal events */
@@ -358,7 +435,9 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//init everything when we're sure SM2 has loaded
 	soundManager.onready(function() {
-		_this.init.call(_this);
+		//preload SC data?
+		if(_this.config.preload == true) _this.preload_sc_tracks.call(_this, _this.init);
+		else _this.init.call(_this);
 	});
 	
 	//expose only the public methods
