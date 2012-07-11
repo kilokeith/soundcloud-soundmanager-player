@@ -258,7 +258,15 @@ var SoundCloudPlayer = function(tracks, config){
 		return $this.trigger(evnt, args);
 	};
 	
-	
+	//does whatever we can to mark for garbage collection
+	this.destroy = function(){
+		if(_this.sound) _this.sound.destruct()
+		_this.tracks = [];
+		delete _this.tracks;
+		delete _this.track;
+		delete _this;
+		delete this;
+	};
 	/* ---- private methods ---- */
 	_this.get_track = function(){ return _this.current_track; };
 	_this.get_sound = function(){ return _this.sound; };
@@ -459,5 +467,6 @@ var SoundCloudPlayer = function(tracks, config){
 		, track: 		this.get_track 		//expose the current track playing
 		, sound: 		this.get_sound 		//expose the current SM2 object
 		, playlist: 	this.get_playlist 	//expose the playlist
+		, destroy: 		this.destroy 		//make all internals for garbage collection
 	};
 };
