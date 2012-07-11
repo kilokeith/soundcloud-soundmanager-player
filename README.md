@@ -116,7 +116,7 @@ Public methods
 + seek(position)
 + restart_track()
 + get_time()	  #gets the current time, based on position like m:ss. Pretty weak. Better roll your own with something like moment.js
-
++ destroy()		  #tried to destroy all internals and mark for garbage collection (it doesn't)
 
 Property Getter/Setter
 + volume(vol)
