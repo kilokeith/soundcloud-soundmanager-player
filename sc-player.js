@@ -64,11 +64,11 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	
 	//keep ref to local scope
-	var _this = this, $this = $(this);
+	var _this = this, jQuerythis = jQuery(this);
 	
 	//local vars
 	this.tracks = tracks;
-	this.config = $.extend(defaults, config);
+	this.config = jQuery.extend(defaults, config);
 	this.current_track_index = 0;
 	this.current_track = null;
 	this.sound = null;
@@ -251,11 +251,11 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//events - using jquery
 	this.on = function(evnt, cb){
-		return $this.on(evnt, cb);
+		return jQuerythis.on(evnt, cb);
 	};
 	this.trigger = function(evnt){
 		var args = (arguments.length > 1) ? __slice.call(arguments, 1) : [];
-		return $this.trigger(evnt, args);
+		return jQuerythis.trigger(evnt, args);
 	};
 	
 	//does whatever we can to mark for garbage collection
@@ -340,7 +340,7 @@ var SoundCloudPlayer = function(tracks, config){
 	//gets a SC url and goes to SC to fetch the track data
 	_this.resolve_track = function(url, cb){
 		//new promise
-		var promise = new $.Deferred();
+		var promise = new jQuery.Deferred();
 		//auto trim urls
 		url = url.replace(/https?\:\/\/soundcloud\.com/gi, "");
 		
@@ -369,7 +369,7 @@ var SoundCloudPlayer = function(tracks, config){
 		});
 		
 		//call the ajax
-		$.ajax({
+		jQuery.ajax({
 			  url: sc_resolve_url+url+
 				'&format=json'+
 				'&consumer_key='+_this.config.consumer_key+
@@ -395,7 +395,7 @@ var SoundCloudPlayer = function(tracks, config){
 		}
 		
 		//have to do apply to pass many promises as list instead of array
-		$.when.apply($, promises).then(
+		jQuery.when.apply(jQuery, promises).then(
 			function(){
 				_this.trigger('scplayer.playlist.preloaded');
 				if(cb) cb();
