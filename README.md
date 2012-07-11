@@ -22,6 +22,8 @@ var scplayer = new SoundCloudPlayer(
 	, {consumer_key: "XXXXXXXXXXXXXX"}
 );
 ```
+If you pass a url like htt(s)://soundcloud.com/diplo/wobble-prod-diplo it will be truncated to /diplo/wobble-prod-diplo for you.
+
 
 You can also pass in multiple tracks to act as a playlist.
 ```js

@@ -341,6 +341,8 @@ var SoundCloudPlayer = function(tracks, config){
 	_this.resolve_track = function(url, cb){
 		//new promise
 		var promise = new $.Deferred();
+		//auto trim urls
+		url = url.replace(/https?\:\/\/soundcloud\.com/gi, "");
 		
 		//if we're cahcing check cache first
 		if( _this.config.cache === true ){
