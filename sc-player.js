@@ -64,7 +64,7 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	
 	//keep ref to local scope
-	var _this = this, jQuerythis = jQuery(this);
+	var _this = this, $this = jQuery(this);
 	
 	//local vars
 	this.tracks = tracks;
@@ -251,17 +251,19 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//events - using jquery
 	this.on = function(evnt, cb){
-		return jQuerythis.on(evnt, cb);
+		return $this.on(evnt, cb);
 	};
 	this.trigger = function(evnt){
 		var args = (arguments.length > 1) ? __slice.call(arguments, 1) : [];
-		return jQuerythis.trigger(evnt, args);
+		return $this.trigger(evnt, args);
 	};
 	
 	//does whatever we can to mark for garbage collection
 	this.destroy = function(){
 		if(_this.sound) _this.sound.destruct()
 		_this.tracks = [];
+		$this.off();
+		$this.remove();
 		delete _this.tracks;
 		delete _this.track;
 		delete _this;
