@@ -123,6 +123,8 @@ Public methods
 Property Getter/Setter
 + volume(vol)
 + position(pos)
++ has_next()	  #returns bool; has a next track to move to - taking into account looping and playlist length
++ has_prev()	  #returns bool; has a next track to move to - taking into account looping and playlist length
 
 Event emiter/listener
 + on(eventname, function)

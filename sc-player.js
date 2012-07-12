@@ -192,6 +192,26 @@ var SoundCloudPlayer = function(tracks, config){
 		return _this;
 	};
 	
+	//could we move to the next track
+	this.has_next = function(){
+		if( _this.tracks[ _this.current_track_index+1 ] ){
+			return true;
+		}else if( _this.config.loop && _this.tracks.length > 1 ){
+			return true;
+		}
+		return false;
+	};
+	//could we move to the prev track
+	this.has_prev = function(){
+		if( _this.tracks[ _this.current_track_index-1 ] ){
+			return true;
+		}else if( _this.config.loop && _this.tracks.length > 1 ){
+			return true;
+		}
+		return false;
+	};
+	
+	
 	this.get_time = function(){
 		var time = this.position();
 		var ms = time % 1000
@@ -466,6 +486,8 @@ var SoundCloudPlayer = function(tracks, config){
 		, goto: 		this.goto
 		, position: 	this.position
 		, seek: 		this.seek
+		, has_next:		this.has_next
+		, has_prev:		this.has_prev
 		, on: 			this.on
 		, trigger: 		this.trigger
 		, track: 		this.get_track 		//expose the current track playing
