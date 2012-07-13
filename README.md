@@ -134,6 +134,7 @@ Internal object getter
 + track() (current track)	
 + sound() (the SM2 sound object for current track)
 + playlist() (same one you passed)
++ track_info(id|url) (gets SC track data from cache or ajax. returns a promise in case a request has to be made)
 
 
 
@@ -143,6 +144,19 @@ Most of the public player methods can be chained together
 
 ```js
 scplayer.pause().next().play().volume(75);
+```
+
+Track Info
+----------
+If you want to lookup the SC data about a track, that isn't necessarily the current track, and want to do it in an async way: here's how it's done.
+```js
+//Notice the done. Using jQuery Deferreds
+//Looking up track index 4. Could also pass a SC url - full or trimmed.
+//Will pull form cache if already looked up and caching on. But could be any SC track really.
+var track_index = 4;
+scplayer.track_info( track_index ).done(function(track){
+	//console.log(track);
+});
 ```
 
 

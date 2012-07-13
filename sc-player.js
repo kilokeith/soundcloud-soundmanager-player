@@ -49,6 +49,7 @@ soundManager.useFastPolling = true;
 */
 
 //SoudCloud Player class
+//v0.9.1
 var SoundCloudPlayer = function(tracks, config){
 	var defaults = {
 		  loop: false
@@ -269,6 +270,15 @@ var SoundCloudPlayer = function(tracks, config){
 		return _this;
 	};
 	
+	
+	//lookup a track's data, from cache or do a lookup. Takes id or url
+	this.track_info = function(id){
+		if( _this.isNumeric(id) ){
+			id = _this.tracks[id];
+		}
+		return _this.resolve_track(id);
+	};
+	
 	//events - using jquery
 	this.on = function(evnt, cb){
 		return $this.on(evnt, cb);
@@ -452,6 +462,11 @@ var SoundCloudPlayer = function(tracks, config){
 		return set_tracks;
 	};
 	
+	//helper utilities
+	_this.isNumeric = function(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	};
+	
 	/* internal events */
 	_this.on('scplayer.track.ready', function(e){
 		if( _this.play_when_ready == true ){
@@ -486,6 +501,7 @@ var SoundCloudPlayer = function(tracks, config){
 		, goto: 		this.goto
 		, position: 	this.position
 		, seek: 		this.seek
+		, track_info: 	this.track_info
 		, has_next:		this.has_next
 		, has_prev:		this.has_prev
 		, on: 			this.on

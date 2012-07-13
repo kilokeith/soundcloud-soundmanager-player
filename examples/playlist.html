@@ -75,10 +75,14 @@
 			//
 			var playlist = scplayer.playlist();
 			for(var x=0, l=playlist.length; x<l; x++){
-				var $li = $("<li/>", {
-					"html": playlist[x]
-				}).data('index', x);
-				$pl.append($li);
+				//lookup the track info
+				scplayer.track_info(x).done(function(track){
+					//console.log(track);
+					var $li = $("<li/>", {
+						"html": track.title
+					}).data('index', x);
+					$pl.append($li);
+				});				
 			}
 			
 			$("#playlist").find('li:first').addClass('active');
