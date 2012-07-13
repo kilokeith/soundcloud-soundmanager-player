@@ -21,6 +21,7 @@ soundManager.useFastPolling = true;
 	scplayer.position
 	scplayer.volume
 	scplayer.changing_track
+	scplayer.loop_changed
 
 */
 /* SCPLAYER PLAYLIST EVENTS */
@@ -273,6 +274,7 @@ var SoundCloudPlayer = function(tracks, config){
 	this.loop = function(do_loop){
 		if(do_loop){
 			_this.config.loop = do_loop;
+			_this.trigger('scplayer.loop_changed', _this.config.loop);
 		}
 		return _this.config.loop;
 	};

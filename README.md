@@ -79,6 +79,7 @@ Player
 + scplayer.position              #player position is set
 + scplayer.volume                #player volume is set
 + scplayer.changing_track        #player changes tracks
++ scplayer.loop_changed          #player looping setting changed.
                                  
 Playlist                         
 + scplayer.playlist.next         #playlist moves to next track
@@ -97,7 +98,7 @@ Track
 + scplayer.track.whileloading    #track event with buffering is going on
 + scplayer.track.whileplaying    #track event updates play position while playing
 + scplayer.track.played          #track triggers play - actually played
-+ scplayer.track.paused          #track puases
++ scplayer.track.paused          #track pauses
 + scplayer.track.resumed         #track resumes from pause
 + scplayer.track.stopped         #track is stopped
 
