@@ -75,14 +75,14 @@
 			//
 			var playlist = scplayer.playlist();
 			for(var x=0, l=playlist.length; x<l; x++){
-				//lookup the track info
-				scplayer.track_info(x).done(function(track){
-					//console.log(track);
-					var $li = $("<li/>", {
-						"html": track.title
-					}).data('index', x);
-					$pl.append($li);
-				});				
+				var $li = $("<li/>", {"html": "loading.."}).data('index', x).appendTo($pl);
+				(function(x,$li){
+					//lookup the track info
+					scplayer.track_info(x).done(function(track){
+						//console.log(track);
+						$li.html(track.title);
+					});
+				})(x,$li);			
 			}
 			
 			$("#playlist").find('li:first').addClass('active');
