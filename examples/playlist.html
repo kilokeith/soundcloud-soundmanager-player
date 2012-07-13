@@ -9,7 +9,7 @@
 	
 
 	<div id="player">
-		<div class="controlls">
+		<div class="controls">
 			<div class="play"></div>
 			<div class="stop"></div>
 			<div class="prev"></div>
@@ -36,7 +36,7 @@
     <script src="../sc-player-waveform.js" type="text/javascript" charset="utf-8"></script>
 	
 	<script type="text/javascript" charset="utf-8">
-		$controlls = $(".controlls");
+		$controls = $(".controls");
 		
 		var scplayer = new SoundCloudPlayer([
 				//"/diplo/wobble-prod-diplo",
@@ -50,7 +50,7 @@
 		});
 		var scwaveform = new SCWaveform(scplayer, {scrub:true});
 
-		$controlls.on("click", 'div', function(e){
+		$controls.on("click", 'div', function(e){
 			e.preventDefault();
 			var $this = $(this)
 			if( $this.hasClass('play') ){ scplayer.pause(); }
@@ -62,9 +62,9 @@
 		
 		scplayer.on("scplayer.pause", function(e, is_paused){
 			if(is_paused === true){
-				$controlls.find('.play').addClass("pause");
+				$controls.find('.play').addClass("pause");
 			}else{
-				$controlls.find('.play').removeClass("pause");
+				$controls.find('.play').removeClass("pause");
 			}
 		});
 		
