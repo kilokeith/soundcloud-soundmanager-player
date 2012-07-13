@@ -49,7 +49,7 @@ soundManager.useFastPolling = true;
 */
 
 //SoudCloud Player class
-//v0.9.1
+//v0.9.2
 var SoundCloudPlayer = function(tracks, config){
 	var defaults = {
 		  loop: false
@@ -269,7 +269,13 @@ var SoundCloudPlayer = function(tracks, config){
 		_this.position(pos);
 		return _this;
 	};
-	
+	//looping
+	this.loop = function(do_loop){
+		if(do_loop){
+			_this.config.loop = do_loop;
+		}
+		return _this.config.loop;
+	};
 	
 	//lookup a track's data, from cache or do a lookup. Takes id or url
 	this.track_info = function(id){

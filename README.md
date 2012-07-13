@@ -123,6 +123,7 @@ Public methods
 Property Getter/Setter
 + volume(vol)
 + position(pos)
++ loop(true|false) #overrides the value passed in the config. Should be safe to do while running.
 + has_next()	  #returns bool; has a next track to move to - taking into account looping and playlist length
 + has_prev()	  #returns bool; has a next track to move to - taking into account looping and playlist length
 
