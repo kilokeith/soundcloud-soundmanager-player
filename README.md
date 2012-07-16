@@ -260,6 +260,51 @@ var scwaveform = new SCWaveform(scplayer, {scrub:true}, {
 ```
 
 
+Better Waveforms w/ waveform.js
+========
+[Waveform.js](http://waveformjs.org/) is a badass library for SoundCloud waveforms which utilizes HTML5 Canvas.
+It's built to work with the SoundCloud SDK, but with a little code you can use it with this library. A little harder to get working, but the results are killer.
+
+Mad credits to the authors: [Johannes Wagener](http://johannes.wagener.cc/) and [Lee Martin](http://leemart.in/)
+
+
+This works by hooking into the internal sound and track objects, and then calling the waveform.js functions with the scope of the sound object.
+
+```js
+//load your player
+var scplayer = new SoundCloudPlayer(
+	[ "/diplo/wobble-prod-diplo"]
+	, {consumer_key: "XXXXXXXXXXXXXX"}
+);
+
+//setup waveform.js
+var waveform = new Waveform({
+	container: $("#waveform").get(0),
+	innerColor: "rgba(255, 255, 255, 0.2)"
+});
+
+//wait until the SM2 object is loaded enough to be bound to
+scplayer.on('scplayer.track.bindable', function(e, track, sound){
+	//get waveform.js to pull the waveform form the track
+	waveform.dataFromSoundCloudTrack(track);
+	//get the waveform update functions back, pass your sweet colors here
+	var waveform_updater = waveform.optionsForSyncedStream({
+		  playedColor: "#7E99AE"
+		, loadedColor: "rgba(255, 255, 255, 0.8)"
+		, defaultColor: "rgba(255, 255, 255, 0.2)"
+	});
+	//a little slower than direct, but let the events pass down to the waveform updater
+	scplayer.on('scplayer.track.whileloading', function(e){
+		waveform_updater.whileloading.call(sound);
+	});
+	scplayer.on('scplayer.track.whileplaying', function(e){
+		waveform_updater.whileplaying.call(sound);
+	});
+});
+```
+
+
+
 License
 -------
 
