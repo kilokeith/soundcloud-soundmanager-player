@@ -260,7 +260,7 @@ var scwaveform = new SCWaveform(scplayer, {scrub:true}, {
 ```
 
 
-Better Waveforms w/ waveform.js
+Better waveforms w/ Waveform.js
 ========
 [Waveform.js](http://waveformjs.org/) is a badass library for SoundCloud waveforms which utilizes HTML5 Canvas.
 It's built to work with the SoundCloud SDK, but with a little code you can use it with this library. A little harder to get working, but the results are killer.
@@ -303,6 +303,16 @@ scplayer.on('scplayer.track.bindable', function(e, track, sound){
 });
 ```
 
+Your markup and styles are much simpler
+```jade
+#waveform
+```
+```less
+#waveform {
+	width: 200px;
+	height: 24px;
+}
+```
 
 
 License
