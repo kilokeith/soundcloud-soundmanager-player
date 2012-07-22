@@ -221,7 +221,7 @@ var SoundCloudPlayer = function(tracks, config){
 		  , m = Math.floor((time / (60 * 1000)) % 60)
 		  , h = Math.floor((time / (60 * 60 * 1000)) % 24)
 		  ;
-		var t = m + ':' + s;
+		var t = m + ':' + _this.pad(s);
 		if(h > 0) t = h + ':' + t;
 		return t;
 	};
@@ -473,6 +473,9 @@ var SoundCloudPlayer = function(tracks, config){
 	//helper utilities
 	_this.isNumeric = function(n) {
 		return !isNaN(parseFloat(n)) && isFinite(n);
+	};
+	_this.pad = function(num) {
+	     return (num < 10 ? '0' : '') + num;
 	};
 	
 	/* internal events */
