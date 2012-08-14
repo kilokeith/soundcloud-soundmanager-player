@@ -488,6 +488,10 @@ var SoundCloudPlayer = function(tracks, config){
 	_this.on('scplayer.track.finished', function(e){
 		if(_this.config.autoswitch) _this.next().play();
 	});
+	//this shouldn't be necessary, but we want to make sure.
+	_this.on('scplayer.playlist.ended', function(e){
+		if(!_this.config.loop) _this.stop();
+	});
 	
 	
 	
