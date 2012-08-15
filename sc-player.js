@@ -1,5 +1,3 @@
-//@codekit-prepend "soundmanager2-nodebug-jsmin.js";
-
 //object slice
 __slice = [].slice;
 
@@ -379,14 +377,6 @@ var SoundCloudPlayer = function(tracks, config){
 				_this.trigger('scplayer.track.paused');
 			}
 			, onfinish: function() { 
-				
-				
-				
-				// --->FUCK ME!!!!<---*
-				
-				
-				
-				
 				_this.trigger('scplayer.track.finished');
 			}
 			, onload: function() {
