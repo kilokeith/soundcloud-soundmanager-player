@@ -12,6 +12,15 @@ Requirements
 
 
 
+Next Updates in the works
+------------
+
++ Remove internal event listeners or make them unremovable
++ Allow string or object to be passed instead of tracks array
++ Finish adding ability to pass non-SC mp3s and keep consistency
+
+
+
 Basic Usage
 ===========
 
@@ -60,7 +69,7 @@ We can configure the player with many options. Most control the flow of the play
 , toggle_pause: true //should pause act as a toggle?
 , cache: true        //should it cache the SC track lookups. Browser should handle the audio
 , preload: false     //prefetch the SC track data
-, debug: false       //console.log() on
+, debug: false       //console.log() on - has internal logging
 }
 ```
 

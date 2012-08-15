@@ -1,3 +1,5 @@
+//@codekit-prepend "soundmanager2-nodebug-jsmin.js";
+
 //object slice
 __slice = [].slice;
 
@@ -89,6 +91,7 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//load a track form a trimmed SC url
 	this.change_track = function(index){
+		_this.log('change_track');
 		//destroy the old sound
 		if(_this.sound){
 			_this.sound.destruct();
@@ -110,6 +113,7 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//playlist related methods
 	this.play = function(){
+		_this.log('play');
 		//if the sound it there and ready, get to it
 		if( _this.sound && _this.sound.readyState == 3 ){
 			_this.sound.play();
@@ -132,24 +136,29 @@ var SoundCloudPlayer = function(tracks, config){
 	this.stop = function(){
 		if(_this.sound) _this.sound.stop();
 		_this.trigger('scplayer.stop');
+		_this.log('stop');
 		return _this;
 	};
 	this.next = function(autoplay){
+		_this.log('next');
 		//play the next track?
 		_this.play_when_ready = (typeof autoplay != 'undefined')? autoplay : _this.config.autoswitch;
-		if(_this.config.debug) console.log(_this.play_when_ready);
+		_this.log(_this.play_when_ready);
 		
 		if( _this.tracks[ _this.current_track_index+1 ] ){
 			_this.current_track_index++;
 			_this.change_track();
 			_this.trigger('scplayer.playlist.next', _this.current_track_index-1, _this.current_track_index);
+			_this.log('has next');
 		}else if( _this.config.loop ){
 			_this.current_track_index = 0;
 			_this.change_track();
 			_this.trigger('scplayer.playlist.looped');
+			_this.log('looped');
 		}else{
 			_this.current_track_index = _this.tracks.length-1
 			_this.trigger('scplayer.playlist.ended');
+			_this.log('no mas');
 		}
 		return _this;
 	};
@@ -172,6 +181,7 @@ var SoundCloudPlayer = function(tracks, config){
 		return _this;
 	};
 	this.goto = function(index, autoplay){
+		_this.log('goto');
 		//play the next track?
 		_this.play_when_ready = (typeof autoplay != 'undefined')? autoplay : _this.config.autoswitch;
 		
@@ -196,6 +206,7 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//could we move to the next track
 	this.has_next = function(){
+		_this.log('has next');
 		if( _this.tracks[ _this.current_track_index+1 ] ){
 			return true;
 		}else if( _this.config.loop && _this.tracks.length > 1 ){
@@ -324,6 +335,7 @@ var SoundCloudPlayer = function(tracks, config){
 		return null;
 	};
 	_this.set_sound = function(track){
+		_this.log('set_sound');
 		//
 		_this.trigger('scplayer.track.info_loaded', track);
 		//store the current track object
@@ -339,6 +351,7 @@ var SoundCloudPlayer = function(tracks, config){
 			  autoLoad: true
 			, id: 'track_' + track.id
 			, multiShot: false
+			, loops: 1
 			, url: url
 			, volume: _this.config.volume
 			, whileloading: function() {
@@ -352,7 +365,7 @@ var SoundCloudPlayer = function(tracks, config){
 				_this.trigger('scplayer.track.whileplaying', percent);
 			}
 			, onplay: function() {
-				if(_this.config.debug) console.log('playyyyy');
+				_this.log('track.onplay');
 				_this.trigger('scplayer.track.played');
 			}
 			, onresume: function() {
@@ -365,10 +378,18 @@ var SoundCloudPlayer = function(tracks, config){
 				_this.trigger('scplayer.track.paused');
 			}
 			, onfinish: function() { 
+				
+				
+				
+				// --->FUCK ME!!!!<---*
+				
+				
+				
+				
 				_this.trigger('scplayer.track.finished');
 			}
 			, onload: function() {
-				if(_this.config.debug) console.log('onload');
+				_this.log('onload');
 				_this.trigger('scplayer.track.ready', _this.current_track_index, _this.current_track);
 			}
 		});
@@ -449,7 +470,7 @@ var SoundCloudPlayer = function(tracks, config){
 				if(cb) cb();
 			},
 			function(){
-				//console.log('promises failed');
+				//_this.log('promises failed');
 			}
 		);
 	};
@@ -478,6 +499,10 @@ var SoundCloudPlayer = function(tracks, config){
 		return set_tracks;
 	};
 	
+	_this.log = function(){
+		if(_this.config.debug && window.console) console.log.apply(console, arguments);
+	};
+	
 	//helper utilities
 	_this.isNumeric = function(n) {
 		return !isNaN(parseFloat(n)) && isFinite(n);
@@ -488,16 +513,22 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	/* internal events */
 	_this.on('scplayer.track.ready', function(e){
+		_this.log('track.onready!!!');
 		if( _this.play_when_ready == true ){
 			_this.play();
 			_this.play_when_ready = false;
 		}
 	});
 	_this.on('scplayer.track.finished', function(e){
-		if(_this.config.autoswitch) _this.next().play();
+		_this.log('track finished');
+		if(_this.config.autoswitch && (_this.config.loop || _this.has_next())){
+			_this.log('finished and autoswitch');
+			_this.next().play();
+		}
 	});
 	//this shouldn't be necessary, but we want to make sure.
 	_this.on('scplayer.playlist.ended', function(e){
+		_this.log('playlist ended');
 		if(!_this.config.loop) _this.stop();
 	});
 	
