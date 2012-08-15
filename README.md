@@ -143,6 +143,7 @@ Event emiter/listener
 
 Internal object getter
 + track() (current track)	
++ track_index() (index of current track)
 + sound() (the SM2 sound object for current track)
 + playlist() (same one you passed)
 + track_info(id|url) (gets SC track data from cache or ajax. returns a promise in case a request has to be made)

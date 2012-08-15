@@ -320,6 +320,7 @@ var SoundCloudPlayer = function(tracks, config){
 	};
 	/* ---- private methods ---- */
 	_this.get_track = function(){ return _this.current_track; };
+	_this.get_track_index = function(){ return _this.current_track_index; };
 	_this.get_sound = function(){ return _this.sound; };
 	_this.get_playlist = function(){ return _this.tracks; };
 	
@@ -561,6 +562,7 @@ var SoundCloudPlayer = function(tracks, config){
 		, on: 			this.on
 		, trigger: 		this.trigger
 		, track: 		this.get_track 		//expose the current track playing
+		, track_index: 	this.get_track_index //expose the current track index
 		, sound: 		this.get_sound 		//expose the current SM2 object
 		, playlist: 	this.get_playlist 	//expose the playlist
 		, destroy: 		this.destroy 		//make all internals for garbage collection
