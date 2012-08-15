@@ -50,7 +50,7 @@ soundManager.useFastPolling = true;
 */
 
 //SoudCloud Player class
-//v0.9.2
+//v0.9.3
 var SoundCloudPlayer = function(tracks, config){
 	var defaults = {
 		  loop: false
