@@ -61,9 +61,9 @@ var SoundCloudPlayer = function(tracks, config){
 		, cache: true //caches the SC track lookup. Browser should handle the audio
 		, preload: false //prefetch the sc track data
 		, debug: false
-	}, 
-	sc_resolve_url = "http://api.soundcloud.com/resolve?url=http://soundcloud.com";
-	
+	}
+	, sc_resolve_url = "http://api.soundcloud.com/resolve?url=http://soundcloud.com"
+	, urlregex = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi);
 	
 	//keep ref to local scope
 	var _this = this, $this = jQuery(this);
@@ -381,6 +381,14 @@ var SoundCloudPlayer = function(tracks, config){
 	_this.resolve_track = function(url, cb){
 		//new promise
 		var promise = new jQuery.Deferred();
+		
+		//allow non SC tracks (watch for bugs)
+		//look for a url, but not soundcloud.com
+		if( url.match(urlregex) && url.search(/soundcloud\.com/i) === -1){
+			var _track = {stream_url:url, id:0, permalink_url:url, duration:0};
+			promise.resolve(_track);
+		}
+		
 		//auto trim urls
 		url = url.replace(/https?\:\/\/soundcloud\.com/gi, "");
 		
