@@ -1,8 +1,8 @@
 #player, #waveform, #playlist { width: 500px; }
 
 #player { position: relative; }
-	#player .controlls {}
-		#player .controlls div {
+	#player .controls {}
+		#player .controls div {
 			display: inline-block;
 			padding: 2px;
 			margin: 2px;
@@ -20,15 +20,15 @@
 			background-size: cover;
 			border: 1px solid black;
 		}
-		#player .controlls div:hover {
+		#player .controls div:hover {
 			opacity: 1;
 			background-color: #F18900;
 		}
-		#player .controlls .play { background-image: url("../images/play.svg"); }
-		#player .controlls .pause { background-image: url("../images/pause.svg"); }
-		#player .controlls .stop { background-image: url("../images/stop.svg"); }
-		#player .controlls .next { background-image: url("../images/next.svg"); }
-		#player .controlls .prev { background-image: url("../images/prev.svg"); }
+		#player .controls .play { background-image: url("../images/play.svg"); }
+		#player .controls .pause { background-image: url("../images/pause.svg"); }
+		#player .controls .stop { background-image: url("../images/stop.svg"); }
+		#player .controls .next { background-image: url("../images/next.svg"); }
+		#player .controls .prev { background-image: url("../images/prev.svg"); }
 
 #waveform {
 	width: 100%;
