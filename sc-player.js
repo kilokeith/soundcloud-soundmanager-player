@@ -241,7 +241,7 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	this.position = function(pos){
 		if(_this.sound){
-			if(pos){
+			if(pos || pos === 0){
 				//limit to bounds
 				pos = Math.min(_this.sound.duration, pos);
 				pos = Math.max(0, pos);
@@ -259,7 +259,7 @@ var SoundCloudPlayer = function(tracks, config){
 	};
 	this.volume = function(vol){
 		if(_this.sound){
-			if(vol){
+			if(vol || vol === 0){
 				//limit to bounds
 				vol = Math.min(100, vol);
 				vol = Math.max(0, vol);
