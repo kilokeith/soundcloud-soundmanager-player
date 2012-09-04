@@ -473,24 +473,23 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//save track to the cache
 	_this.parse_tracks = function(url, _tracks){
-		var x = tracks.length, set_tracks = [];
+		var set_tracks = [], track_urls = []
+		  , start_index = _this.tracks.indexOf(url);
+
 		for(var x=0, l=_tracks.length; x<l; x++){
 			var _track = _tracks[x];
-			//slice out track url - begins with http://soundcloude.com/
+			//slice out track url - begins with http://soundcloud.com/
 			var trackurl = _track.permalink_url.substring(21);
 			
 			//cache tracks
 			if( _this.config.cache === true ) _this.set_cache(trackurl, _track);
 			set_tracks.push(_track);
-			
-			//add tracks to playlist
-			if(x==0){
-				//replace the origional set url with first track list so we don't do this again
-				_this.tracks.splice(_this.current_track_index, 1, trackurl);
-			}else{
-				_this.tracks.splice(_this.current_track_index+x, 0, trackurl);
-			}
+			track_urls.push(trackurl);
 		}
+		//splice at start_index, delete 1, splice in expanded tracks
+		var args = [start_index, 1].concat(track_urls);
+		//add tracks to playlist
+		_this.tracks.splice.apply(_this.tracks, args);
 		
 		return set_tracks;
 	};
