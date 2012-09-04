@@ -63,6 +63,7 @@ Options
 We can configure the player with many options. Most control the flow of the playlist. These are the defaults; located at near the top of the class.
 ```js
 { loop: false        //should the playlsit loop around on the ends
+, start_on: 0		 //the default track index to start with
 , autoplay: false    //should the play start out playing
 , autoswitch: true   //next track in playlist will auto load and play
 , volume: 100        //the initial volume

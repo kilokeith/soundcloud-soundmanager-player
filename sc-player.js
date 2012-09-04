@@ -54,10 +54,11 @@ SM2_config = {
 */
 
 //SoudCloud Player class
-//v0.9.3
+//v0.9.4
 var SoundCloudPlayer = function(tracks, config){
 	var defaults = {
 		  loop: false
+		, start_on: 0
 		, autoplay: false
 		, autoswitch: true //for playlists
 		, volume: 100
@@ -75,7 +76,7 @@ var SoundCloudPlayer = function(tracks, config){
 	//local vars
 	this.tracks = tracks;
 	this.config = jQuery.extend(defaults, config);
-	this.current_track_index = 0;
+	this.current_track_index = this.config.start_on;
 	this.current_track = null;
 	this.sound = null;
 	
