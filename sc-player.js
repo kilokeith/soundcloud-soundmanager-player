@@ -3,7 +3,8 @@ __slice = [].slice;
 
 
 //set the default options for SM2
-SM2_config = {
+//call setup for SM2, which inits all this
+soundManager.setup({
 	  url: 'swf/'
 	, flashVersion: 9
 	, useFlashBlock: false
@@ -12,7 +13,7 @@ SM2_config = {
 	, useFastPolling: true
 	, debugFlash: false
 	, debugMode: false
-};
+});
 
 
 /* SCPLAYER EVENTS */
@@ -533,17 +534,16 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	
 	//init everything when we're sure SM2 has loaded
-	SM2_config.onready = function(){
+	soundManager.onready(function() {
+		_this.log('SOUNDMANAGER2 ready!!');
 		//preload SC data?
 		if(_this.config.preload == true) _this.preload_sc_tracks.call(_this, _this.init);
 		else _this.init.call(_this);
-	};
+	});
 	//detect timeout for loading SM2 swf
 	soundManager.ontimeout(function() {
 		if(window.console) console.log('SOUNDMANAGER2 TIMEDOUT!!');
 	});
-	//call setup for SM@, which inits all this
-	soundManager.setup(SM2_config);
 	
 	//expose only the public methods
 	return {
