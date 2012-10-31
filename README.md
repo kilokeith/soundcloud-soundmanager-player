@@ -8,7 +8,7 @@ Requirements
 ------------
 
 + jQuery (>= 1.7 preferred for events 'on'|'off' syntax)
-+ SoundManager2 (tested with V2.97a.20120527)
++ SoundManager2 (tested with V2.97a.20120916)
 
 
 
