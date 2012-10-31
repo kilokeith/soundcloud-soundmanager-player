@@ -4,17 +4,18 @@ __slice = [].slice;
 
 //set the default options for SM2
 //call setup for SM2, which inits all this
-soundManager.setup({
-	  url: 'swf/'
-	, flashVersion: 9
-	, useFlashBlock: false
-	, useHighPerformance: true
-	, wmode: 'transparent'
-	, useFastPolling: true
-	, debugFlash: false
-	, debugMode: false
-});
-
+if(typeof soundManager != 'undefined'){
+	soundManager.setup({
+		  url: 'swf/'
+		, flashVersion: 9
+		, useFlashBlock: false
+		, useHighPerformance: true
+		, wmode: 'transparent'
+		, useFastPolling: true
+		, debugFlash: false
+		, debugMode: false
+	});
+}
 
 /* SCPLAYER EVENTS */
 /*
