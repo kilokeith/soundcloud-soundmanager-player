@@ -316,6 +316,9 @@ var SoundCloudPlayer = function(tracks, config){
 		_this.tracks = [];
 		$this.off();
 		$this.remove();
+		_this.tracks = null;
+		_this.track = null;
+		_this = null;
 		delete _this.tracks;
 		delete _this.track;
 		delete _this;
@@ -535,9 +538,11 @@ var SoundCloudPlayer = function(tracks, config){
 		if(_this.config.preload == true) _this.preload_sc_tracks.call(_this, _this.init);
 		else _this.init.call(_this);
 	};
+	//detect timeout for loading SM2 swf
 	soundManager.ontimeout(function() {
 		if(window.console) console.log('SOUNDMANAGER2 TIMEDOUT!!');
 	});
+	//call setup for SM@, which inits all this
 	soundManager.setup(SM2_config);
 	
 	//expose only the public methods
