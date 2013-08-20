@@ -56,7 +56,7 @@ if(typeof soundManager != 'undefined'){
 */
 
 //SoudCloud Player class
-//v0.9.5
+//v0.9.6
 var SoundCloudPlayer = function(tracks, config){
 	var defaults = {
 		  loop: false
@@ -143,6 +143,15 @@ var SoundCloudPlayer = function(tracks, config){
 		if(_this.sound){
 			if(_this.config.toggle_pause && !force) _this.sound.togglePause();
 			else _this.sound.pause();
+			_this.trigger('scplayer.pause', _this.sound.paused);
+		}
+		return _this;
+	};
+	this.resume = function(force){
+		force = (force != null) ? force : false;
+		if(_this.sound){
+			if(_this.config.toggle_pause && !force) _this.sound.togglePause();
+			else _this.sound.resume();
 			_this.trigger('scplayer.pause', _this.sound.paused);
 		}
 		return _this;
@@ -573,6 +582,7 @@ var SoundCloudPlayer = function(tracks, config){
 	return {
 		  play: 		this.play
 		, pause: 		this.pause
+		, resume: 		this.resume
 		, stop: 		this.stop
 		, next: 		this.next
 		, prev: 		this.prev
@@ -593,6 +603,6 @@ var SoundCloudPlayer = function(tracks, config){
 		, sound: 		this.get_sound 		//expose the current SM2 object
 		, playlist: 	this.get_playlist 	//expose the playlist
 		, destroy: 		this.destroy 		//make all internals for garbage collection
-		, add_tracks: 	this.add_tracks 	//append tracks to a player
+		, add_tracks: 	this.add_tracks 		//append tracks to a player
 	};
 };
