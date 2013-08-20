@@ -56,7 +56,7 @@ if(typeof soundManager != 'undefined'){
 */
 
 //SoudCloud Player class
-//v0.9.4
+//v0.9.5
 var SoundCloudPlayer = function(tracks, config){
 	var defaults = {
 		  loop: false
@@ -76,11 +76,14 @@ var SoundCloudPlayer = function(tracks, config){
 	var _this = this, $this = jQuery(this);
 	
 	//local vars
-	this.tracks = tracks;
+	this.tracks = [];
 	this.config = jQuery.extend(defaults, config);
 	this.current_track_index = this.config.start_on;
 	this.current_track = null;
 	this.sound = null;
+
+	//flag for if we're already inited
+	this.inited = false;
 	
 	//hold a state so when you hit play it'll play on the correct sound when it's ready
 	this.play_when_ready = false;
@@ -89,6 +92,9 @@ var SoundCloudPlayer = function(tracks, config){
 	
 	//setup
 	this.init = function(){
+		//don't re-init
+		if(_this.inited) return;
+		
 		_this.change_track();
 		_this.trigger('scplayer.init');
 		if(_this.config.autoplay) _this.play();
@@ -471,7 +477,7 @@ var SoundCloudPlayer = function(tracks, config){
 				if(cb) cb();
 			},
 			function(){
-				//_this.log('promises failed');
+				_this.log('promises failed to preload tracks');
 			}
 		);
 	};
@@ -499,6 +505,21 @@ var SoundCloudPlayer = function(tracks, config){
 		return set_tracks;
 	};
 	
+
+	_this.add_tracks = function(tracks){
+		//take a single string or array of strings
+		if(typeof tracks == 'string') tracks = [tracks];
+		//tracks were passed
+		if(tracks != null && tracks.length > 0){
+			//add the tracks to the tracks array
+			_this.tracks = _this.tracks.concat(tracks);
+
+			//preload SC data? or init
+			if(_this.config.preload == true) _this.preload_sc_tracks.call(_this, _this.init);
+			else _this.init.call(_this);
+		}
+	};
+
 	_this.log = function(){
 		if(_this.config.debug && window.console) console.log.apply(console, arguments);
 	};
@@ -537,9 +558,8 @@ var SoundCloudPlayer = function(tracks, config){
 	//init everything when we're sure SM2 has loaded
 	soundManager.onready(function() {
 		_this.log('SOUNDMANAGER2 ready!!');
-		//preload SC data?
-		if(_this.config.preload == true) _this.preload_sc_tracks.call(_this, _this.init);
-		else _this.init.call(_this);
+		//load the tracks
+		_this.add_tracks(tracks);
 	});
 	//detect timeout for loading SM2 swf
 	soundManager.ontimeout(function() {
@@ -570,5 +590,6 @@ var SoundCloudPlayer = function(tracks, config){
 		, sound: 		this.get_sound 		//expose the current SM2 object
 		, playlist: 	this.get_playlist 	//expose the playlist
 		, destroy: 		this.destroy 		//make all internals for garbage collection
+		, add_tracks: 	this.add_tracks 	//append tracks to a player
 	};
 };
