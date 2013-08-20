@@ -120,7 +120,7 @@ The player exposes a lot of methods. They should be self explanatory.
 
 Public methods
 + play()
-+ pause()
++ pause(force=false) #pass true to force a pause if also using toggle_pause
 + stop()
 + next(autoplay)  #overrides the autoswitch config
 + prev(autoplay)  #overrides the autoswitch config

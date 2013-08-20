@@ -138,9 +138,10 @@ var SoundCloudPlayer = function(tracks, config){
 		
 		return _this;
 	};
-	this.pause = function(){
+	this.pause = function(force){
+		force = (force != null) ? force : false;
 		if(_this.sound){
-			if(_this.config.toggle_pause) _this.sound.togglePause();
+			if(_this.config.toggle_pause && !force) _this.sound.togglePause();
 			else _this.sound.pause();
 			_this.trigger('scplayer.pause', _this.sound.paused);
 		}
