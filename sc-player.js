@@ -98,6 +98,8 @@ var SoundCloudPlayer = function(tracks, config){
 		_this.change_track();
 		_this.trigger('scplayer.init');
 		if(_this.config.autoplay) _this.play();
+		//set flag
+		_this.inited = true;
 	};
 	
 	//load a track form a trimmed SC url
