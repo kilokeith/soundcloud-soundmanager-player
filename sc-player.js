@@ -456,12 +456,24 @@ var SoundCloudPlayer = function(tracks, config){
 			if(cb) cb(_track);
 		});
 		
-		//call the ajax
-		jQuery.ajax({
-			  url: sc_resolve_url+url+
+		var full_resolve_url;
+
+		if (url.lastIndexOf("http://api.soundcloud.com/tracks/", 0) === 0) {
+			full_resolve_url = url+
+				'?format=json'+
+				'&consumer_key='+_this.config.consumer_key+
+				'&callback=?';
+		} else {
+			full_resolve_url = sc_resolve_url+url+
 				'&format=json'+
 				'&consumer_key='+_this.config.consumer_key+
-				'&callback=?'
+				'&callback=?';
+		}
+
+
+		//call the ajax
+		jQuery.ajax({
+			  url: full_resolve_url
 			, dataType: 'jsonp'
 			, error: function(jqXHR, textStatus, errorThrown){
 				promise.reject(jqXHR, textStatus, errorThrown);
